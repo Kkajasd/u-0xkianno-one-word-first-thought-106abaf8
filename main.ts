@@ -13,5 +13,13 @@ import { mkdirSync, writeFileSync } from "node:fs";
 
 const WORD = "psithurism";
 
+// Guard: the entry must be exactly one word — a single token of 1-24
+// characters with no whitespace or newline. Fail loudly instead of
+// writing a malformed entry.
+if (!/^[^\s]{1,24}$/.test(WORD)) {
+  console.error(`Invalid entry word: ${JSON.stringify(WORD)}`);
+  process.exit(1);
+}
+
 mkdirSync("/output", { recursive: true });
 writeFileSync("/output/entry.txt", WORD, "utf8");
